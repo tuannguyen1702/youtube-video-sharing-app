@@ -1,18 +1,10 @@
-import {
-  Entity,
-  ObjectIdColumn,
-  Column,
-  ObjectId,
-  BeforeInsert,
-} from 'typeorm';
+import { Entity, Column, BeforeInsert } from 'typeorm';
 
 import * as bcrypt from 'bcrypt';
+import { BaseEntity } from 'src/shared/entities/base.entity';
 
 @Entity()
-export class User {
-  @ObjectIdColumn()
-  id: ObjectId;
-
+export class User extends BaseEntity {
   @Column()
   name: string;
 
