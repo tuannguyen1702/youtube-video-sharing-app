@@ -59,7 +59,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     if (email) {
       const user = await this.usersService.findByUsername(email);
-      if (user) return user;
+      if (user) return user.safeResponse();
     }
 
     throw new UnauthorizedException();

@@ -15,4 +15,11 @@ export default () => ({
     synchronize:
       process.env.TYPEORM_AUTO_SYNC_SCHEMA_DATABASE === 'true' || false,
   },
+  youtube: {
+    apiUrl:
+      process.env.YOUTUBE_API_URL ||
+      'https://youtube.googleapis.com/youtube/v3',
+    apiKey:
+      process.env.YOUTUBE_API_KEY || 'AIzaSyD91XkobCc2UmxihZI4GQcm3Qc4u8QNxQM',
+  },
 });

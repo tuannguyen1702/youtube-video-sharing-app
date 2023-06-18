@@ -18,4 +18,9 @@ export class User extends BaseEntity {
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
   }
+
+  public safeResponse(): Partial<User> {
+    const { id, name, email } = this;
+    return { id, name, email };
+  }
 }
