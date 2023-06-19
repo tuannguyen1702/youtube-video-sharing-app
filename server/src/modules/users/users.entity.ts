@@ -6,9 +6,6 @@ import { BaseEntity } from 'src/shared/entities/base.entity';
 @Entity()
 export class User extends BaseEntity {
   @Column()
-  name: string;
-
-  @Column()
   email: string;
 
   @Column()
@@ -20,7 +17,7 @@ export class User extends BaseEntity {
   }
 
   public safeResponse(): Partial<User> {
-    const { id, name, email } = this;
-    return { id, name, email };
+    const { id, email } = this;
+    return { id, email };
   }
 }

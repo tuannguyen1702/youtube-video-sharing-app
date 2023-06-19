@@ -6,8 +6,8 @@ import {
   Request,
   Body,
 } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/auth.guard';
 import { VideosService } from './videos.service';
+import { JwtAuthGuard } from '../users/jwt/jwt.service';
 
 @Controller('videos')
 export class VideosController {

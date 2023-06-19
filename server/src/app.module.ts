@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { VideosModule } from './modules/videos/videos.module';
 import { TypeOrmConfigService } from './config/database.config';
@@ -21,7 +20,6 @@ import configuration from './config/app.config';
       useClass: TypeOrmConfigService,
       inject: [ConfigService],
     }),
-    AuthModule,
     UsersModule,
     VideosModule,
   ],
