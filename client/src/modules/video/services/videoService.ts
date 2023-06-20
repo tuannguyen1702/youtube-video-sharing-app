@@ -5,8 +5,7 @@ const http = new HttpService();
 
 export async function fetchAllVideo(): Promise<VideoData[]> {
   try {
-    const response = await http.get<VideoData[]>(`/videos`);
-    return response as VideoData[];
+    return await http.get<VideoData[]>(`/videos`);
   } catch (error) {
     throw new Error("Failed to fetch video data");
   }
@@ -14,8 +13,7 @@ export async function fetchAllVideo(): Promise<VideoData[]> {
 
 export async function shareVideo(sharedLink: string): Promise<VideoData> {
   try {
-    const response = await http.post("/videos", { sharedLink });
-    return response as VideoData;
+    return await http.post("/videos", { sharedLink });
   } catch (error) {
     throw new Error("Failed to shared link video");
   }

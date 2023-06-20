@@ -24,7 +24,6 @@ const VideoList = () => {
   return (
     <div className='max-w-4xl w-full  m-auto'>
       {videos.map((video: VideoData) => (
-        // <div key={video.id}>{video.title}</div>
         <VideoCard key={video.id} {...video} />
       ))}
     </div>

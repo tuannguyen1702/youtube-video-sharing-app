@@ -9,6 +9,7 @@ const VideoShare = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { sharedLinkStatus } = useAppSelector((state) => state.video);
+  const { user } = useAppSelector((state) => state.user);
 
   const [sharedLink, setSharedLink] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,10 +26,10 @@ const VideoShare = () => {
   };
 
   useEffect(() => {
-    if (sharedLinkStatus === 'success') {
+    if (sharedLinkStatus === 'success' || !user) {
       router.push('/');
     }
-  }, [router, sharedLinkStatus]);
+  }, [router, sharedLinkStatus, user]);
 
   return (
     <fieldset className="border max-w-3xl w-full rounded-md border-solid border-gray-300 p-5 m-auto">

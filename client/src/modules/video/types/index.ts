@@ -5,3 +5,8 @@ export type VideoData = {
   youtubeId: string;
   createBy: any;
 };
+
+export type LoginRegisterFormData = {
+    email: string;
+    password: string;
+}

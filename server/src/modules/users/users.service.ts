@@ -36,14 +36,14 @@ export class UsersService {
       } else {
         throw new HttpException(
           'Wrong user or password',
-          HttpStatus.UNAUTHORIZED,
+          HttpStatus.BAD_REQUEST,
         );
       }
     } else {
       const entity = Object.assign(new User(), user);
       const newUser = await this.userRepository.save(entity);
       data.isNewUser = true;
-      data.user = newUser.email;
+      data.email = newUser.email;
     }
 
     const token = this.jwtService.sign({ email: user.email });

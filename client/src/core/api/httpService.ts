@@ -1,9 +1,11 @@
+import LocalStorageService from "@/shared/services/localStorage";
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
+
+const localStorage = new LocalStorageService();
 
 class HttpService {
   private httpClient: AxiosInstance;
-
-  token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InR1YW5uZ3V5ZW4xNzAzQGdtYWlsLmNvbSIsImlhdCI6MTY4NzI1MTQxNiwiZXhwIjoxNjg3MjU1MDE2fQ.72JlzEx82z-T7sSxa2CGyY6iL8kudFfDYYQ8XVJChMU`;
+  token = localStorage.getToken();
 
   constructor(baseURL: string = "") {
     this.httpClient = axios.create({
@@ -15,6 +17,7 @@ class HttpService {
 
     // Request interceptor
     this.httpClient.interceptors.request.use(async (request) => {
+      console.log(request);
       return request;
     });
 
