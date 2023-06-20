@@ -1,9 +1,9 @@
-const ShareVideo = () => {
+import VideoShare from "@/modules/video/containers/VideoShare";
+
+const ShareVideoPage = () => {
   return (
-    <div>
-      <h1>Share Page</h1>
-    </div>
+    <VideoShare></VideoShare>
   );
 };
 
-export default ShareVideo;
+export default ShareVideoPage;

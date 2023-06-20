@@ -1,17 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { VideoData } from "../types";
-import { fetchAllVideoData } from "./videoThunks";
+import { fetchAllVideoData, shareVideoData} from "./videoThunks";
 
 interface VideoState {
   videos: VideoData[];
   loading: boolean;
   error: any;
+  sharedLinkStatus: '' | 'start' | 'success' | 'fail';
 }
 
 const initialState: VideoState = {
   videos: [],
   loading: false,
   error: null,
+  sharedLinkStatus: ''
 };
 
 const videoSlice = createSlice({
@@ -31,6 +33,16 @@ const videoSlice = createSlice({
       .addCase(fetchAllVideoData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(shareVideoData.pending, (state) => {
+        state.sharedLinkStatus = 'start';
+      })
+      .addCase(shareVideoData.fulfilled, (state, action) => {
+        state.sharedLinkStatus = 'success';
+      })
+      .addCase(shareVideoData.rejected, (state, action) => {
+        state.loading = false;
+        state.sharedLinkStatus = 'fail';
       });
   },
 });
