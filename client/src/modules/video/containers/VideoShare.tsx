@@ -41,7 +41,7 @@ const VideoShare = () => {
             </label>
           </div>
           <div className="md:w-2/3">
-            <Input pattern={'^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$'} required={true} onChange={handleNameChange} className='w-full' />
+            <Input placeholder='Please enter a valid YouTube link' pattern={'^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$'} required={true} onChange={handleNameChange} className='w-full' />
           </div>
         </div>
         <div className="md:flex md:items-center mb-6">

@@ -2,6 +2,7 @@ import { fetchAllVideoData } from '@/modules/video/store/videoThunks';
 import { VideoData } from '@/modules/video/types';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import React, { useEffect } from 'react';
+import VideoCard from '../components/VideoCard';
 
 const VideoList = () => {
   const dispatch = useAppDispatch();
@@ -21,11 +22,10 @@ const VideoList = () => {
   }
 
   return (
-    <div>
-      <p>Videos</p>
-
+    <div className='max-w-4xl w-full  m-auto'>
       {videos.map((video: VideoData) => (
-        <div key={video.id}>{video.title}</div>
+        // <div key={video.id}>{video.title}</div>
+        <VideoCard key={video.id} {...video} />
       ))}
     </div>
   );

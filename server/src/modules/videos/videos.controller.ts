@@ -12,8 +12,6 @@ import { JwtAuthGuard } from '../users/jwt/jwt.service';
 @Controller('videos')
 export class VideosController {
   constructor(private readonly videosService: VideosService) {}
-
-  @UseGuards(JwtAuthGuard)
   @Get()
   getAll(): Promise<any> {
     return this.videosService.getAll();
