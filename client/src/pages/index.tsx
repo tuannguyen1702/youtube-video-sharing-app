@@ -1,9 +1,7 @@
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import VideoList from '@/modules/video/containers/VideoList';
 
 export default function Home() {
   return (
-    <p>Home Page</p>
+    <VideoList></VideoList>
   )
 }
