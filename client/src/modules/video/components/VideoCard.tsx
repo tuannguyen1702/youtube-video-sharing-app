@@ -4,9 +4,10 @@ interface VideoCardProps {
     title: string;
     youtubeId: string;
     description?: string;
+    createdBy: { email: string; };
 }
 
-const VideoCard: React.FC<VideoCardProps> = ({ title, youtubeId, description }) => {
+const VideoCard: React.FC<VideoCardProps> = ({ title, youtubeId, description, createdBy }) => {
     const embedUrl = `https://www.youtube.com/embed/${youtubeId}`;
 
     return (
@@ -24,7 +25,8 @@ const VideoCard: React.FC<VideoCardProps> = ({ title, youtubeId, description }) 
             </div>
             <div className="col-span-1">
                 <div>
-                    <h2 className="text-lg font-bold mb-2 line-clamp-2">{title}</h2>
+                    <h2 className="text-md font-bold mb-2 line-clamp-2">{title}</h2>
+                    <p className="text-gray-500 mb-2"><b>Shared by:</b> {createdBy?.email}</p>
                     <p className="text-gray-500 line-clamp-5">{description}</p>
                 </div>
             </div>

@@ -3,33 +3,36 @@ import Button from '@/shared/components/Button';
 import Input from '@/shared/components/Input';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { useRouter } from 'next/router';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
+import { resetSharedLinkStatus } from '../store/videoSlice';
 
 const VideoShare = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { sharedLinkStatus } = useAppSelector((state) => state.video);
+  const { sharedLinkStatus, loading } = useAppSelector((state) => state.video);
   const { user } = useAppSelector((state) => state.user);
 
   const [sharedLink, setSharedLink] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
 
   const handleNameChange = (value: string) => {
     setSharedLink(value);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    setLoading(true);
     event.preventDefault();
 
     dispatch(shareVideoData(sharedLink));
   };
 
   useEffect(() => {
-    if (sharedLinkStatus === 'success' || !user) {
+    if (sharedLinkStatus === 'success') {
       router.push('/');
     }
-  }, [router, sharedLinkStatus, user]);
+
+    return () => {
+      dispatch(resetSharedLinkStatus())
+    }
+  }, [dispatch, router, sharedLinkStatus, user]);
 
   return (
     <fieldset className="border max-w-3xl w-full rounded-md border-solid border-gray-300 p-5 m-auto">

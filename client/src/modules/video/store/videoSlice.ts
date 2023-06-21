@@ -19,7 +19,11 @@ const initialState: VideoState = {
 const videoSlice = createSlice({
   name: "video",
   initialState,
-  reducers: {},
+  reducers: {
+    resetSharedLinkStatus: (state) => {
+      return {...state, sharedLinkStatus: ''};
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllVideoData.pending, (state) => {
@@ -35,9 +39,11 @@ const videoSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(shareVideoData.pending, (state) => {
+        state.loading = true;
         state.sharedLinkStatus = 'start';
       })
       .addCase(shareVideoData.fulfilled, (state, action) => {
+        state.loading = false;
         state.sharedLinkStatus = 'success';
       })
       .addCase(shareVideoData.rejected, (state, action) => {
@@ -46,5 +52,7 @@ const videoSlice = createSlice({
       });
   },
 });
+
+export const {resetSharedLinkStatus} = videoSlice.actions
 
 export default videoSlice.reducer;

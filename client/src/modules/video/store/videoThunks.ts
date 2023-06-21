@@ -15,10 +15,6 @@ export const fetchAllVideoData = createAsyncThunk(
 export const shareVideoData = createAsyncThunk(
   "video/shareVideoData",
   async (sharedLink: string, { rejectWithValue }) => {
-    try {
-      return await shareVideo(sharedLink);
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+    return await shareVideo(sharedLink);
   }
 );

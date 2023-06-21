@@ -1,23 +1,24 @@
+import { userLogout } from "@/modules/user/store/userSlice";
 import LocalStorageService from "@/shared/services/localStorage";
+import store from "@/store";
+import { addNotifyToList } from "@/store/notifySlice";
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
 
-const localStorage = new LocalStorageService();
-
+const localStorageService = new LocalStorageService();
 class HttpService {
   private httpClient: AxiosInstance;
-  token = localStorage.getToken();
 
   constructor(baseURL: string = "") {
     this.httpClient = axios.create({
       baseURL: baseURL || "http://localhost:3001/",
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-      },
     });
 
     // Request interceptor
     this.httpClient.interceptors.request.use(async (request) => {
-      console.log(request);
+      const token = localStorageService.getToken();
+      if (token) {
+        request.headers["Authorization"] = `Bearer ${token}`;
+      }
       return request;
     });
 
@@ -29,19 +30,23 @@ class HttpService {
       (error) => {
         const axiosError: AxiosError = error;
         const errorResponse = axiosError.response?.data;
-        throw errorResponse || error;
+        this.handleServerError(errorResponse);
       }
     );
   }
 
-  setAuthToken(token: string): void {
-    this.httpClient.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${token}`;
-  }
+  handleServerError(data: any) {
+    switch (data.statusCode) {
+      case 400:
+        store.dispatch(addNotifyToList({message: data.message}))
+        break;
 
-  clearAuthToken(): void {
-    delete this.httpClient.defaults.headers.common["Authorization"];
+      case 401:
+        store.dispatch(userLogout());
+
+      default:
+        break;
+    }
   }
 
   async get<T>(url: string, config: any = {}): Promise<T> {
