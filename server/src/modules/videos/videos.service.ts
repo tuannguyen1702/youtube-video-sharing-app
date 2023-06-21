@@ -59,7 +59,7 @@ export class VideosService {
   }
 
   getAll(): Promise<Video[]> {
-    return this.videoRepository.find();
+    return this.videoRepository.find({ order: { createdAt: 'desc' } });
   }
 
   getVideoByYoutubeId(youtubeId: string): Promise<Video> {

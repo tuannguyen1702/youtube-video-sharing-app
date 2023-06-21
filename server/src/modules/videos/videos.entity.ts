@@ -28,14 +28,12 @@ export class Video extends BaseEntity {
   })
   youtubeId: string;
 
-  @ManyToMany(() => User)
-  @JoinTable()
-  likeBy: User[];
+  @Column()
+  likeBy: string[];
 
-  @ManyToMany(() => User)
-  @JoinTable()
-  dislikeBy: User[];
+  @Column()
+  dislikeBy: string[];
 
-  @ManyToOne(() => User, (user) => user.id)
+  @Column()
   createdBy: User;
 }
