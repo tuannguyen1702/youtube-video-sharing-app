@@ -38,6 +38,7 @@ const VideoShare = () => {
     <fieldset className="border max-w-3xl w-full rounded-md border-solid border-gray-300 p-5 m-auto">
       <legend className='px-2'>Share a Youtube movie</legend>
       <form onSubmit={handleSubmit}>
+      {!user && <div className='p-3 text-center justify-center bg-red-100 border-red-100 mb-5 rounded-md border'>You must be logged in to share videos</div>}
         <div className="md:flex md:items-center mb-6">
           <div className="md:w-1/3">
             <label className="block text-gray-800 md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
@@ -52,7 +53,9 @@ const VideoShare = () => {
           <div className="md:w-1/3">
           </div>
           <div className="md:w-2/3">
-            <Button disabled={loading} type="submit" className='w-full'>{loading ? 'Sharing...' : 'Share'}</Button>
+            <Button disabled={loading || !user} type="submit" className='w-full'>{loading ? 'Sharing...' : 'Share'}</Button>
+
+           
           </div>
         </div>
       </form>

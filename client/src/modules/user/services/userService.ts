@@ -1,6 +1,5 @@
 import HttpService from "@/core/api/httpService";
 import { UserData } from "../types";
-import SocketClient from "@/core/api/socket";
 
 export async function userLoginOrRegister(
   email: string,
@@ -12,9 +11,6 @@ export async function userLoginOrRegister(
       email,
       password,
     });
-
-    const socketClient = SocketClient.getInstance(); 
-    socketClient.init();
 
     return res;
   } catch (error) {

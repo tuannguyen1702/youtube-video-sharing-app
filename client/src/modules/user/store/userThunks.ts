@@ -3,6 +3,7 @@ import { getUserProfile, userLoginOrRegister } from "../services/userService";
 import { LoginRegisterFormData } from "@/modules/video/types";
 import LocalStorageService from "@/shared/services/localStorage";
 import { userLogout } from "./userSlice";
+import SocketClient from "@/core/api/socket";
 const localStorage = new LocalStorageService();
 
 export const loginOrRegister = createAsyncThunk(
@@ -12,6 +13,10 @@ export const loginOrRegister = createAsyncThunk(
       const { email, password } = payload;
       const user = await userLoginOrRegister(email, password);
       localStorage.setToken(user.token);
+
+      const socketClient = SocketClient.getInstance();
+      socketClient.init();
+      
       return user;
     } catch (error) {
       return rejectWithValue(error);
