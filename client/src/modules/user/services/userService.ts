@@ -1,5 +1,6 @@
 import HttpService from "@/core/api/httpService";
 import { UserData } from "../types";
+import SocketClient from "@/core/api/socket";
 
 export async function userLoginOrRegister(
   email: string,
@@ -7,10 +8,15 @@ export async function userLoginOrRegister(
 ): Promise<UserData> {
   try {
     const http = new HttpService();
-    return await http.post<UserData>(`/users/login-register`, {
+    const res = await http.post<UserData>(`/users/login-register`, {
       email,
       password,
     });
+
+    const socketClient = SocketClient.getInstance(); 
+    socketClient.init();
+
+    return res;
   } catch (error) {
     throw new Error("Login or register fail");
   }

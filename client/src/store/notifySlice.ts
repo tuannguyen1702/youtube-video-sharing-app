@@ -24,8 +24,8 @@ const notifySlice = createSlice({
   initialState,
   reducers: {
     addNotifyToList: (state, action) => {
-      state.notifies = [...state.notifies, action.payload];
-    }
+      state.notifies = [action.payload];;
+    },
   },
 });
 

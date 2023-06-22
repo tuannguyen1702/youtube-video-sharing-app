@@ -8,9 +8,10 @@ import Logout from "@/modules/user/containers/Logout";
 import Button from "../components/Button";
 import { useRouter } from "next/router";
 import NotificationList from "./NotificationList";
+import { addNotifyToList } from "@/store/notifySlice";
+import SocketClient from "@/core/api/socket";
 
 const Header = () => {
-
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { user } = useAppSelector((state) => state.user);
@@ -18,6 +19,31 @@ const Header = () => {
     useEffect(() => {
         dispatch(getProfile());
     }, [])
+
+    useEffect(() => {
+        const socketClient = SocketClient.getInstance();
+        const socket = socketClient.getSocket();
+        if (!socket) {
+            socketClient.init();
+        }
+
+        socket?.connect();
+        // Listen for the "new-video" event
+        socket?.on("receive-new-video", (message: string) => {
+            try {
+                const data = JSON.parse(message);
+                dispatch(addNotifyToList({ duration: 5000, type: 'success', title: `${data.createdBy?.email} just shared the video`, message: `${data.title}` }));
+            } catch (err) {
+                console.log(err)
+            }
+        });
+
+        // Clean up the socket connection when the component unmounts
+        return () => {
+            socket?.disconnect();
+        };
+    }, []);
+
 
     const goToSharePage = () => {
         router.push('/share')
