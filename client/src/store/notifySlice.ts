@@ -1,5 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { addNotify } from "./notifyThunks";
+import { createSlice } from "@reduxjs/toolkit";
 
 export type NotifyData = {
   title?: string;
@@ -24,7 +23,7 @@ const notifySlice = createSlice({
   initialState,
   reducers: {
     addNotifyToList: (state, action) => {
-      state.notifies = [action.payload];;
+      state.notifies = action.payload ? [action.payload] : [];
     },
   },
 });

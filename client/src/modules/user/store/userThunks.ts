@@ -15,8 +15,10 @@ export const loginOrRegister = createAsyncThunk(
       localStorage.setToken(user.token);
 
       const socketClient = SocketClient.getInstance();
+      const socket = socketClient.getSocket();
+      if (socket) socket.removeAllListeners();
       socketClient.init();
-      
+
       return user;
     } catch (error) {
       return rejectWithValue(error);

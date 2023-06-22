@@ -1,4 +1,7 @@
 import LocalStorageService from "@/shared/services/localStorage";
+import store from "@/store";
+import { useAppDispatch } from "@/store/hook";
+import { addNotifyToList } from "@/store/notifySlice";
 import { io, Socket } from "socket.io-client";
 
 class SocketClient {
@@ -31,7 +34,18 @@ class SocketClient {
       };
     }
 
-    this.socket = io("http://localhost:3001/", opt);
+    this.socket = io(`${process.env.NEXT_PUBLIC_API_END_POINT}/`, opt);
+    this.socket.connect();
+
+     // Listen for the "new-video" event
+     this.socket.on("receive-new-video", (message: string) => {
+      try {
+          const data = JSON.parse(message);
+          store.dispatch(addNotifyToList({ duration: 5000, type: 'success', title: `${data.createdBy?.email} just shared the video`, message: `${data.title}` }));
+      } catch (err) {
+          console.log(err)
+      }
+  });
   }
 
   public getSocket(): Socket | null {

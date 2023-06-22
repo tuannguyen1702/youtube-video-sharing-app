@@ -8,9 +8,9 @@ const localStorageService = new LocalStorageService();
 class HttpService {
   private httpClient: AxiosInstance;
 
-  constructor(baseURL: string = "") {
+  constructor() {
     this.httpClient = axios.create({
-      baseURL: baseURL || "http://localhost:3001/",
+      baseURL: process.env.NEXT_PUBLIC_API_END_POINT,
     });
 
     // Request interceptor

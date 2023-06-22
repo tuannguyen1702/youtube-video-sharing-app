@@ -9,7 +9,7 @@ const NotificationList = () => {
 
     return (
         <>
-            {notifies?.length && <div className='z-20 fixed top-1 right-1 w-full max-w-xs py-1 px-3'>
+            {notifies?.length > 0 && <div className='z-20 fixed top-1 right-1 w-full max-w-md py-1 px-3'>
                 {notifies.map((notify: NotifyData, idx: number) => (
                     <Notification key={'notify_' + idx} {...notify} />
                 ))}

@@ -4,7 +4,7 @@ interface VideoCardProps {
     title: string;
     youtubeId: string;
     description?: string;
-    createdBy: { email: string; };
+    createdBy?: { email: string; };
 }
 
 const VideoCard: React.FC<VideoCardProps> = ({ title, youtubeId, description, createdBy }) => {

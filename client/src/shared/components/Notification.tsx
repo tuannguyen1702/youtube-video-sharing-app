@@ -1,3 +1,5 @@
+import { useAppDispatch } from '@/store/hook';
+import { addNotifyToList } from '@/store/notifySlice';
 import React, { useEffect, useState } from 'react';
 
 export interface NotificationProps {
@@ -8,17 +10,18 @@ export interface NotificationProps {
 }
 
 const Notification: React.FC<NotificationProps> = ({ title, message, duration = 3000, type = 'warning'}) => {
+    const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState(true);
-
     useEffect(() => {
         setIsOpen(true);
         const timer = setTimeout(() => {
             setIsOpen(false);
+            dispatch(addNotifyToList(null));
         }, duration);
 
         return () => clearTimeout(timer);
     }, [message]);
-    
+
     const handleClose = () => {
         setIsOpen(false);
     };
@@ -46,7 +49,7 @@ const Notification: React.FC<NotificationProps> = ({ title, message, duration = 
     return (
         <>
             {isOpen && (
-                <div id={'toast-' + type} className="flex border px-2 items-center w-full max-w-xs mb-2 text-gray-500 bg-white rounded-lg shadow" role="alert">
+                <div id={'toast-' + type} className="flex border px-2 items-center w-full mb-2 text-gray-500 bg-white rounded-lg shadow" role="alert">
                     {renderElement()}
                     <div className="ml-3 py-3 text-md font-normal">{title && <>{title} <br /></>}
                         {message && (<span className="text-sm font-normal">{message}</span>)}
