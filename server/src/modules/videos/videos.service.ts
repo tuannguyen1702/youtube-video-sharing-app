@@ -6,6 +6,7 @@ import { User } from '../users/users.entity';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
+import { Server } from 'socket.io';
 
 @Injectable()
 export class VideosService {
@@ -14,6 +15,7 @@ export class VideosService {
     private readonly videoRepository: MongoRepository<Video>,
     private configService: ConfigService,
     private httpService: HttpService,
+    private readonly server: Server,
   ) {}
   async create(sharedLink: string, user: User): Promise<Video> {
     const youtubeId = this.extractYouTubeId(sharedLink);
@@ -55,7 +57,10 @@ export class VideosService {
     if (user) {
       video.createdBy = user;
     }
-    return this.videoRepository.save(video);
+    const videoAdded = this.videoRepository.save(video);
+    this.server.emit('newMessage', videoAdded);
+
+    return videoAdded;
   }
 
   getAll(): Promise<Video[]> {
