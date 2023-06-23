@@ -4,12 +4,10 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    ports:
-      - 3001:3001
     environment:
-      - APP_HOST = 0.0.0.0
+      - APP_HOST = localhost
       - APP_PORT = 3001
-      - MONGODB_CONNECTION_STRING = mongodb://127.0.0.1:27017/video_sharing_app
+      - MONGODB_CONNECTION_STRING = mongodb://localhost:27017/video_sharing_app
       - TYPEORM_AUTO_SYNC_SCHEMA_DATABASE = false
       - YOUTUBE_API_URL = https://youtube.googleapis.com/youtube/v3
       - YOUTUBE_API_KEY = AIzaSyD91XkobCc2UmxihZI4GQcm3Qc4u8QNxQM
@@ -22,13 +20,11 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
-    ports:
-      - 3000:3000
+    network_mode: "host"
     environment:
       - NEXT_PUBLIC_API_END_POINT=http://localhost:3001
   mongodb:
     image: mongo
-    ports:
-      - 27017:27017
+    network_mode: "host"
     volumes:
       - ./data:/data/db
