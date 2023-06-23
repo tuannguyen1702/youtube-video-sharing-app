@@ -5,6 +5,7 @@ services:
       context: ./server
       dockerfile: Dockerfile
     environment:
+      - APP_HOST = localhost
       - APP_PORT = 3001
       - MONGODB_CONNECTION_STRING = mongodb://localhost:27017/video_sharing_app
       - TYPEORM_AUTO_SYNC_SCHEMA_DATABASE = false
