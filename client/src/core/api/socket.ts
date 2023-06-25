@@ -1,6 +1,6 @@
 import LocalStorageService from "@/shared/services/localStorage";
 import store from "@/store";
-import { useAppDispatch } from "@/store/hook";
+import { useAppSelector } from "@/store/hook";
 import { addNotifyToList } from "@/store/notifySlice";
 import { io, Socket } from "socket.io-client";
 
@@ -41,7 +41,10 @@ class SocketClient {
      this.socket.on("receive-new-video", (message: string) => {
       try {
           const data = JSON.parse(message);
-          store.dispatch(addNotifyToList({ duration: 5000, type: 'success', title: `${data.createdBy?.email} just shared the video`, message: `${data.title}` }));
+          const user = localStorageService.getUser();
+          if(data.createdBy?.email !== user) {
+            store.dispatch(addNotifyToList({ duration: 5000, type: 'success', title: `${data.createdBy?.email} just shared the video`, message: `${data.title}` }));
+          }
       } catch (err) {
           console.log(err)
       }

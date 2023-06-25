@@ -13,6 +13,7 @@ export const loginOrRegister = createAsyncThunk(
       const { email, password } = payload;
       const user = await userLoginOrRegister(email, password);
       localStorage.setToken(user.token);
+      localStorage.setUser(user?.email);
 
       const socketClient = SocketClient.getInstance();
       const socket = socketClient.getSocket();
@@ -41,6 +42,7 @@ export const logout = createAsyncThunk(
   "user/logout",
   async (_, { dispatch }) => {
     localStorage.clearToken();
+    localStorage.removeItem('user');
     dispatch(userLogout());
     return true;
   }
