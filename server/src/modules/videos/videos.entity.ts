@@ -1,6 +1,7 @@
-import { Entity, Column, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
-import { BaseEntity } from 'src/shared/entities/base.entity';
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from '../../shared/entities/base.entity';
 import { User } from '../users/users.entity';
+import { CreatedByDto } from './videos.dto';
 
 @Entity()
 export class Video extends BaseEntity {
@@ -29,11 +30,11 @@ export class Video extends BaseEntity {
   youtubeId: string;
 
   @Column()
-  likeBy: string[];
+  likeBy?: string[];
 
   @Column()
-  dislikeBy: string[];
+  dislikeBy?: string[];
 
   @Column()
-  createdBy: User;
+  createdBy: CreatedByDto;
 }

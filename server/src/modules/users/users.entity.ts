@@ -1,7 +1,7 @@
 import { Entity, Column, BeforeInsert } from 'typeorm';
 
 import * as bcrypt from 'bcrypt';
-import { BaseEntity } from 'src/shared/entities/base.entity';
+import { BaseEntity } from '../../shared/entities/base.entity';
 
 @Entity()
 export class User extends BaseEntity {

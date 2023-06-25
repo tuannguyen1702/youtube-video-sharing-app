@@ -8,12 +8,13 @@ import {
 } from '@nestjs/common';
 import { VideosService } from './videos.service';
 import { JwtAuthGuard } from '../users/jwt/jwt.service';
+import { Video } from './videos.entity';
 
 @Controller('videos')
 export class VideosController {
   constructor(private readonly videosService: VideosService) {}
   @Get()
-  getAll(): Promise<any> {
+  getAll(): Promise<Video[]> {
     return this.videosService.getAll();
   }
 

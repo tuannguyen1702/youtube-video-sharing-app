@@ -10,10 +10,6 @@ import { ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
-    JwtModule.register({
-      secret: 'your-secret-key',
-      signOptions: { expiresIn: '1h' },
-    }),
     JwtModule.registerAsync({
       useFactory: async (configService: ConfigService) => {
         return {

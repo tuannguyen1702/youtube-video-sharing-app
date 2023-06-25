@@ -8,15 +8,15 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './users.entity';
 import { JwtAuthGuard } from './jwt/jwt.service';
+import { UserLoginRegisterRequestDto } from './users.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('login-register')
-  loginOrRegister(@Body() user: User) {
+  loginOrRegister(@Body() user: UserLoginRegisterRequestDto) {
     return this.usersService.loginOrRegister(user);
   }
 

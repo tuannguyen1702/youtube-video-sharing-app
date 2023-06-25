@@ -2,11 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from './videos.entity';
 import { MongoRepository } from 'typeorm';
-import { User } from '../users/users.entity';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
-import { Server } from 'socket.io';
+import { CreatedByDto } from './videos.dto';
 
 @Injectable()
 export class VideosService {
@@ -15,9 +14,8 @@ export class VideosService {
     private readonly videoRepository: MongoRepository<Video>,
     private configService: ConfigService,
     private httpService: HttpService,
-    private readonly server: Server,
   ) {}
-  async create(sharedLink: string, user: User): Promise<Video> {
+  async create(sharedLink: string, user: CreatedByDto): Promise<Video> {
     const youtubeId = this.extractYouTubeId(sharedLink);
 
     if (!youtubeId) {
@@ -38,7 +36,7 @@ export class VideosService {
 
     const videoInfo = await this.getVideoInfoById(youtubeId);
 
-    const { title, description }: any = videoInfo?.items[0]?.snippet;
+    const { title, description }: any = videoInfo?.items?.[0]?.snippet || {};
 
     if (!title) {
       throw new HttpException(
@@ -58,7 +56,6 @@ export class VideosService {
       video.createdBy = user;
     }
     const videoAdded = this.videoRepository.save(video);
-    this.server.emit('newMessage', videoAdded);
 
     return videoAdded;
   }
