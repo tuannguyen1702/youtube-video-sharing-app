@@ -11,7 +11,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ title, youtubeId, description, cr
     const embedUrl = `https://www.youtube.com/embed/${youtubeId}`;
 
     return (
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div className="col-span-1 rounded-md overflow-hidden bg-gray-200">
                 <div className="relative pb-[56.25%]">
                     <iframe
